@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Comment</title>
+</head>
+<body>
+{% if postcommentlist %}
+   <table>
+    {% for comment in postcommentlist %}
+        <tr>
+        <td>{{ comment.post }}</td>
+        <td>{{ comment.id }}</td>
+        <td><a href="/NewsPostComment/Detail/{{ comment.id }}">{{ comment.name}}</a></td>
+        <td>{{ comment.content }}</td>
+        <td>
+            <form action="{% url 'isactivecomment' comment.id %}" method="post">
+    {%  csrf_token %}
+    <input type="radio" id="comment {{ forloop.counter }}" name="post" value="{{ comment.id}}">
+    <label for="comment {{ forloop.counter }}">
+        Is Active
+        {% if comment.isactive %}
+            <img src="https://d30y9cdsu7xlg0.cloudfront.net/png/446229-200.png" width="50" height="50"/>
+        {% endif %}
+    </label>
+<input type="submit" value="Activated!">
+</form>
+        </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+</body>
+</html>

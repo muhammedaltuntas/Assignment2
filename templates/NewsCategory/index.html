@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Category</title>
+</head>
+<body>
+{% if categoryall %}
+    <table>
+    {% for cat in categoryall %}
+        <tr>
+        <td>{{ cat.id }}</td>
+        <td><a href="/NewsCategory/Detail/{{ cat.id }}">{{ cat.categoryname}}</a></td>
+        <td>
+            <form action="{% url 'isactivecategory' cat.id %}" method="post">
+    {%  csrf_token %}
+    <input type="radio" id="cat {{ forloop.counter }}" name="post" value="{{ cat.id }}">
+    <label for="cat {{ forloop.counter }}">
+        Is Active
+        {% if cat.isactive %}
+            <img src="https://d30y9cdsu7xlg0.cloudfront.net/png/446229-200.png" width="50" height="50"/>
+        {% endif %}
+    </label>
+<input type="submit" value="Activated!">
+</form>
+        </td>
+        </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p>No category are available.</p>
+{% endif %}
+</body>
+</html>
